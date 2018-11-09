@@ -18,16 +18,16 @@ router.get('/', (req, res, next) => {
 router.post('/create', (req, res, next) => {
   const id = req.session.currentUser._id;
   console.log('hola');
-  Playlist.create({
-    owner: id,
-    title: req.body.title,
-    link: req.body.link,
-    styles: [req.body.styles]
-  }).then((response) => {
-    res.status(200).json(response)
-  }).catch((error) => {
-    next(error);
-  })
+    Playlist.create({
+      owner: id,
+      title: req.body.title,
+      link: req.body.link,
+      styles: [req.body.styles]
+    }).then((response) => {
+      res.status(200).json(response)
+    }).catch((error) => {
+      next(error);
+    })
 
 })
 
