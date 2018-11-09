@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const ObjectId = Schema.Types.ObjectId;
+
 
 const playlistSchema = new Schema({
   owner: {
@@ -10,7 +12,8 @@ const playlistSchema = new Schema({
   link: String,
   styles: [{
     type: String,
-    enum: ['Electro', 'Pop', 'Jazz']
+    enum: ['Electro', 'Pop', 'Jazz'],
+    default: 'Jazz'
   }],
 });
 

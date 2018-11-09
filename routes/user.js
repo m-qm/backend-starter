@@ -5,7 +5,7 @@ const User = require('../models/user');
 
 // Edit your profile
 
-router.get('/profile/edit', middlewares.notifications, (req, res, next) => {
+router.get('/edit/:id', middlewares.notifications, (req, res, next) => {
   const id = req.session.currentUser._id;
   User.findById(id)
     .then((user) => {
