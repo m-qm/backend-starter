@@ -4,11 +4,13 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
   username: String,
   password: String,
-}, {
-  timestamps: {
-    createdAt: 'created_at',
-    updatedAt: 'updated_at'
-  },
+  description: String,
+  email: String,
+  styles: [{
+    type: String,
+    enum: ['Electro', 'Pop', 'Jazz']
+}],
+}
 });
 
 const User = mongoose.model('User', userSchema);
