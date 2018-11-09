@@ -15,7 +15,7 @@ router.get('/', (req, res, next) => {
   })
 })
 
-router.post('/', (req, res, next) => {
+router.post('/create', (req, res, next) => {
   const id = req.session.currentUser._id;
   console.log('hola');
   Playlist.create({

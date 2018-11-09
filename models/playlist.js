@@ -12,8 +12,6 @@ const playlistSchema = new Schema({
   link: String,
   styles: [{
     type: String,
-    enum: ['Electro', 'Pop', 'Jazz'],
-    default: 'Jazz'
   }],
 });
 
