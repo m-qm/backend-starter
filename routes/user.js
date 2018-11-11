@@ -3,25 +3,29 @@ const router = express.Router();
 
 const User = require('../models/user');
 
-// Edit your profile
+// router.get('/profile', isLoggedIn, (req, res) => {
+//   const userId = req.params.id;
+//   User.findById(userId)
+//     .then(user => {
+//       return res.json(user);
+//     })
+//     .catch(error => {
+//       return res.json(error);
+//     } );
+// });
 
-router.get('/edit/:id', middlewares.notifications, (req, res, next) => {
-  const id = req.session.currentUser._id;
-  User.findById(id)
-    .then((user) => {
-      res.render('profile/edit', { user: user });
-    })
-    .catch(next);
-});
+// router.post('/profile/create', (req, res, next) => {
+//     User.create({
+//       description: req.body.description,
+//       email: req.body.email,
+//       styles: [req.body.styles]
+//     }).then((response) => {
+//       res.status(200).json(response)
+//     }).catch((error) => {
+//       next(error);
+//     })
 
-router.post('/me/edit', middlewares.requireUser, middlewares.requireEditProfile, (req, res, next) => {
-  const userinfo = req.body;
-  const id = req.session.currentUser._id;
+// })
 
-  User.findByIdAndUpdate(id, userinfo)
-    .then(() => {
-      res.redirect('/profile');
-    })
-    .catch(next);
-});
+
 module.exports = router;

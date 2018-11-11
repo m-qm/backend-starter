@@ -3,7 +3,7 @@ const router = express.Router();
 
 const Playlist = require('../models/playlist');
 
-// Edit your playlist
+// Render playlist
 
 router.get('/', (req, res, next) => {
   Playlist.find().populate('playlist')
@@ -17,7 +17,6 @@ router.get('/', (req, res, next) => {
 
 router.post('/create', (req, res, next) => {
   const id = req.session.currentUser._id;
-  console.log('hola');
     Playlist.create({
       owner: id,
       title: req.body.title,
@@ -31,23 +30,5 @@ router.post('/create', (req, res, next) => {
 
 })
 
-// router.get('/play/edit', middlewares.notifications, (req, res, next) => {
-//   const id = req.session.currentUser._id;
-//   User.findById(id)
-//     .then((user) => {
-//       res.render('profile/edit', { user: user });
-//     })
-//     .catch(next);
-// });
 
-// router.post('/me/edit', middlewares.requireUser, middlewares.requireEditProfile, (req, res, next) => {
-//   const userinfo = req.body;
-//   const id = req.session.currentUser._id;
-
-//   User.findByIdAndUpdate(id, userinfo)
-//     .then(() => {
-//       res.redirect('/profile');
-//     })
-//     .catch(next);
-// });
 module.exports = router;
