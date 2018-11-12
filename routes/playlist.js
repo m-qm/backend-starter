@@ -31,14 +31,12 @@ router.post('/create', (req, res, next) => {
 
 })
 
-router.post('/delete', (req, res, next) => {
-  const idUser = res.session.currentUser._id;
-
+router.delete('/:id', (req, res, next) => {
   const id = req.params.id;
-  console.log(req.params.id);
-  console.log('user', idUser);
+
   Playlist.findByIdAndDelete(id)
-    .then(() => {
+    .then((result) => {
+      res.status(200).json(result)
       console.log('Deleted Successfully')
     })
     .catch(error => {
@@ -47,39 +45,34 @@ router.post('/delete', (req, res, next) => {
     });
 });
 
-router.get('/playlist/edit', (req, res, next) => {
+router.put('/playlist/edit', (req, res, next) => {
   const id = req.session.currentUser._id;
   const playlist = req.body;
 
-  Playlist.findById(id)
-    .then((user) => {
-      res.render('playlist/edit', { user: user });
-    })
-    .catch(next);
+  Playlist.findByIdAndUpdate(id, {
+    description: req.body.description,
+    email: req.body.email,
+    styles: [req.body.styles]
+  })
+  .then((response) => {
+    res.status(200).json(response)
+  }).catch((error) => {
+    next(error);
+  })
 });
-
-router.post('/me/edit', (req, res, next) => {
-  const userinfo = req.body;
-  const id = req.session.currentUser._id;
-
-  User.findByIdAndUpdate(id, userinfo)
-    .then(() => {
-      res.redirect('/profile');
-    })
-    .catch(next);
-});
-
 
 router.get('/:id', (req, res, next) => {
   const id = req.params.id;
   const playlist = req.body;
   Playlist.findById(id, playlist)
     .then(playlist => {
-      res.render('playlist/playlistinfo', { playlist: playlist });
+      res.status(200).json(playlist)
     })
     .catch(error => {
       console.log('error', error);
       next(error);
-    });
+    })
 });
-module.exports = router;
+
+module.exports = router
+
