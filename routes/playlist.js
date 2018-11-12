@@ -31,23 +31,55 @@ router.post('/create', (req, res, next) => {
 
 })
 
-// router.get('/play/edit', middlewares.notifications, (req, res, next) => {
-//   const id = req.session.currentUser._id;
-//   User.findById(id)
-//     .then((user) => {
-//       res.render('profile/edit', { user: user });
-//     })
-//     .catch(next);
-// });
+router.post('/delete', (req, res, next) => {
+  const idUser = res.session.currentUser._id;
 
-// router.post('/me/edit', middlewares.requireUser, middlewares.requireEditProfile, (req, res, next) => {
-//   const userinfo = req.body;
-//   const id = req.session.currentUser._id;
+  const id = req.params.id;
+  console.log(req.params.id);
+  console.log('user', idUser);
+  Playlist.findByIdAndDelete(id)
+    .then(() => {
+      console.log('Deleted Successfully')
+    })
+    .catch(error => {
+      console.log('error', error);
+      next(error);
+    });
+});
 
-//   User.findByIdAndUpdate(id, userinfo)
-//     .then(() => {
-//       res.redirect('/profile');
-//     })
-//     .catch(next);
-// });
+router.get('/playlist/edit', (req, res, next) => {
+  const id = req.session.currentUser._id;
+  const playlist = req.body;
+
+  Playlist.findById(id)
+    .then((user) => {
+      res.render('playlist/edit', { user: user });
+    })
+    .catch(next);
+});
+
+router.post('/me/edit', (req, res, next) => {
+  const userinfo = req.body;
+  const id = req.session.currentUser._id;
+
+  User.findByIdAndUpdate(id, userinfo)
+    .then(() => {
+      res.redirect('/profile');
+    })
+    .catch(next);
+});
+
+
+router.get('/:id', (req, res, next) => {
+  const id = req.params.id;
+  const playlist = req.body;
+  Playlist.findById(id, playlist)
+    .then(playlist => {
+      res.render('playlist/playlistinfo', { playlist: playlist });
+    })
+    .catch(error => {
+      console.log('error', error);
+      next(error);
+    });
+});
 module.exports = router;
