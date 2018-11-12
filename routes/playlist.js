@@ -53,7 +53,7 @@ router.put('/playlist/edit', (req, res, next) => {
     description: req.body.description,
     email: req.body.email,
     styles: [req.body.styles]
-  })
+  }) 
   .then((response) => {
     res.status(200).json(response)
   }).catch((error) => {
