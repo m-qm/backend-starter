@@ -101,4 +101,18 @@ router.get('/profile', isLoggedIn(), (req, res, next) => {
   });
 });
 
+router.put('/profile/edit', (req, res, next) => {
+  const id = req.session.currentUser._id;
+
+  User.findByIdAndUpdate(id, {
+    description: req.body.description,
+    email: req.body.email,
+    styles: [req.body.styles]
+  }).then((response) => {
+    res.status(200).json(response)
+  }).catch((error) => {
+    next(error);
+  }) 
+})
+
 module.exports = router;

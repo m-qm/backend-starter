@@ -4,9 +4,10 @@ const router = express.Router();
 const User = require('../models/user');
 
 router.get('/profile', isLoggedIn, (req, res) => {
-  const userId = req.params.id;
+  const userId = req.session.currentUser._id;
   User.findById(userId)
     .then(user => {
+      console.log(user)
       return res.json(user);
     })
     .catch(error => {
