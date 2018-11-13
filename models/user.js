@@ -10,6 +10,13 @@ const userSchema = new Schema({
     type: String,
     enum: ['Electro', 'Pop', 'Jazz']
   }],
+  favorites: [{
+    id: String,
+    owner: String,
+    title: String,
+    link: String,
+    styles: String
+  }] 
 });
 
 const User = mongoose.model('User', userSchema);

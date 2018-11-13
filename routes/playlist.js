@@ -73,7 +73,21 @@ router.get('/:id', (req, res, next) => {
         next(error);
       })
   });
-  
+
+router.get('/search', (req, res, next) => {
+  const searchValue = req.query.name;
+  Playlist.find({ 'name': { $regex: `^${searchValue}.*$`, $options: 'i' } })
+    .then(playlist => {
+      if (!playlist) {
+        return res.status(404).json({
+          error: 'Not found'
+        });
+      }
+      return res.status(200).json(playlist);
+    })
+    .catch(next);
+});
+
 
 module.exports = router
 
