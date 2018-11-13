@@ -46,7 +46,7 @@ router.delete('/:id', (req, res, next) => {
 });
 
 router.put('/playlist/edit', (req, res, next) => {
-  const id = req.session.currentUser._id;
+  const id = req.session.playlist._id;
   const playlist = req.body;
 
   Playlist.findByIdAndUpdate(id, {
@@ -61,18 +61,16 @@ router.put('/playlist/edit', (req, res, next) => {
   })
 });
 
-router.get('/:id', (req, res, next) => {
-  const id = req.params.id;
-  const playlist = req.body;
-  Playlist.findById(id, playlist)
-    .then(playlist => {
-      res.status(200).json(playlist)
-    })
-    .catch(error => {
-      console.log('error', error);
-      next(error);
-    })
-});
+router.get('/playlist/:id', (req, res, next) => {
+    const id = req.session.playlist._id;
+  // const id = req.session.playlist._id;
+  Playlist.findById(id, (error, playlist)) 
+    .then((response) => {
+    res.status(200).json(response)
+  }).catch((error) => {
+    next(error);
+  });
+})
 
 module.exports = router
 
