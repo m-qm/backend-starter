@@ -61,16 +61,18 @@ router.put('/playlist/edit', (req, res, next) => {
   })
 });
 
-router.get('/playlist/:id', (req, res, next) => {
-    const id = req.session.playlist._id;
-  // const id = req.session.playlist._id;
-  Playlist.findById(id, (error, playlist)) 
-    .then((response) => {
-    res.status(200).json(response)
-  }).catch((error) => {
-    next(error);
+router.get('/:id', (req, res, next) => {
+    const id = req.params.id;
+    
+
+    Playlist.findById(id) 
+      .then((response) => {
+        res.status(200).json(response)
+        })
+      .catch((error) => {
+        next(error);
+      })
   });
-})
 
 module.exports = router
 
