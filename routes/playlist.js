@@ -2,8 +2,8 @@ const express = require('express');
 const router = express.Router();
 
 const Playlist = require('../models/playlist');
+const User = require('../models/user');
 
-// Edit your playlist
 
 router.get('/', (req, res, next) => {
   Playlist.find().populate('playlist')
@@ -45,7 +45,32 @@ router.delete('/:id', (req, res, next) => {
     });
 });
 
-router.put('/playlist/edit', (req, res, next) => {
+router.post('/:id/favorites', (req, res, next) => {
+  const id = req.params.id;
+  const userId = req.session.currentUser._id;
+
+  console.log("userId", userId)
+  console.log("playlistid", id)
+
+  User.findById(userId)
+    .then((user)=>{
+      console.log("user", user)
+      user.favorites.push(id);
+      user.save()
+        .then((response)=>{
+          res.status(200).json(response)
+        })
+        .catch((error)=>{
+          next(error);
+        });
+    })
+    .catch((error)=>{
+      next(error);
+    });
+    
+})
+
+router.put('/:id/edit', (req, res, next) => {
   const id = req.session.playlist._id;
   const playlist = req.body;
 
@@ -63,14 +88,14 @@ router.put('/playlist/edit', (req, res, next) => {
 
 router.get('/:id', (req, res, next) => {
     const id = req.params.id;
-    Playlist.findById(id) 
-      .then((response) => {
-        res.status(200).json(response)
-        })
-      .catch((error) => {
-        next(error);
-      })
+  // const id = req.session.playlist._id;
+  Playlist.findById(id, (error, playlist)) 
+    .then((response) => {
+    res.status(200).json(response)
+  }).catch((error) => {
+    next(error);
   });
+})
 
 router.get('/search', (req, res, next) => {
   const searchValue = req.params.styles;
@@ -85,7 +110,6 @@ router.get('/search', (req, res, next) => {
     })
     .catch(next);
 });
-
 
 module.exports = router
 

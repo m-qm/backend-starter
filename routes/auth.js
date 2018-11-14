@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 
 const User = require('../models/user');
+const Playlist = require('../models/playlist')
 
 const { isLoggedIn } = require('../helpers/middlewares');
 
@@ -116,5 +117,12 @@ router.put('/profile/edit', (req, res, next) => {
     next(error);
   }) 
 })
+
+// router.post('/profile', (req, res, next) => {
+//   const id = req.session.currentUser._id;
+
+//   User.findByIdAndUpdate(id, )
+
+// })
 
 module.exports = router;
