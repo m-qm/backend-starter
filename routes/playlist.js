@@ -46,7 +46,32 @@ router.delete('/:id', (req, res, next) => {
     });
 });
 
-router.put('/playlist/edit', (req, res, next) => {
+router.post('/:id/favorites', (req, res, next) => {
+  const id = req.params.id;
+  const userId = req.session.currentUser._id;
+
+  console.log("userId", userId)
+  console.log("playlistid", id)
+
+  User.findById(userId)
+    .then((user)=>{
+      console.log("user", user)
+      user.favorites.push(id);
+      user.save()
+        .then((response)=>{
+          res.status(200).json(response)
+        })
+        .catch((error)=>{
+          next(error);
+        });
+    })
+    .catch((error)=>{
+      next(error);
+    });
+    
+})
+
+router.put('/:id/edit', (req, res, next) => {
   const id = req.session.playlist._id;
   const playlist = req.body;
 
@@ -62,7 +87,7 @@ router.put('/playlist/edit', (req, res, next) => {
   })
 });
 
-router.get('/playlist/:id', (req, res, next) => {
+router.get('/:id', (req, res, next) => {
     const id = req.params.id;
   // const id = req.session.playlist._id;
   Playlist.findById(id, (error, playlist)) 
@@ -73,25 +98,6 @@ router.get('/playlist/:id', (req, res, next) => {
   });
 })
 
-router.post('/playlist/:id/favourites', (req, res, next) => {
-  const id = req.params.id;
-  const userId = req.session.currentUser._id;
 
-  User.findById(userId)
-    .then((user)=>{
-      user.favorites.push(id);
-      user.save()
-        .then((response)=>{
-          res.status(200).json(response)
-        })
-        .catch((error)=>{
-          next(error);
-        });
-    })
-    .catch((error)=>{
-      next(error);
-    });
-    
-})
 module.exports = router
 
