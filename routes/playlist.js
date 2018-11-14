@@ -63,8 +63,6 @@ router.put('/playlist/edit', (req, res, next) => {
 
 router.get('/:id', (req, res, next) => {
     const id = req.params.id;
-    
-
     Playlist.findById(id) 
       .then((response) => {
         res.status(200).json(response)
@@ -75,8 +73,8 @@ router.get('/:id', (req, res, next) => {
   });
 
 router.get('/search', (req, res, next) => {
-  const searchValue = req.query.name;
-  Playlist.find({ 'name': { $regex: `^${searchValue}.*$`, $options: 'i' } })
+  const searchValue = req.params.styles;
+  Playlist.find({ 'styles': { $regex: `^${searchValue}.*$`, $options: 'i' } })
     .then(playlist => {
       if (!playlist) {
         return res.status(404).json({

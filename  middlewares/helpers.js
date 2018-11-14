@@ -9,6 +9,10 @@ const isLoggedIn = () => (req, res, next) => {
   }
 };
 
+const isCurrentUser = () => (req, res, next) => {
+    
+}
+
 module.exports = {
   isLoggedIn
 };
