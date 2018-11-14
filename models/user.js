@@ -7,10 +7,7 @@ const userSchema = new Schema({
   password: String,
   description: String,
   email: String,
-  styles: [{
-    type: String,
-    enum: ['Electro', 'Pop', 'Jazz']
-  }],
+  styles: String,
   favorites: [{
     type: ObjectId,
     ref: 'Playlist'
