@@ -10,9 +10,7 @@ const playlistSchema = new Schema({
   },
   title: String,
   link: String,
-  styles: [{
-    type: String,
-  }],
+  styles: String
 });
 
 const Playlist = mongoose.model('Playlist', playlistSchema);
