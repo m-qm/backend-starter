@@ -4,7 +4,6 @@ const router = express.Router();
 const Playlist = require('../models/playlist');
 const User = require('../models/user');
 
-// Edit your playlist
 
 router.get('/', (req, res, next) => {
   Playlist.find().populate('playlist')
