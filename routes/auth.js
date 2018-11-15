@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 
 const User = require('../models/user');
+const Playlist = require('../models/playlist')
 
 const { isLoggedIn } = require('../helpers/middlewares');
 
@@ -107,12 +108,15 @@ router.put('/profile/edit', (req, res, next) => {
   User.findByIdAndUpdate(id, {
     description: req.body.description,
     email: req.body.email,
+    city: req.body.city,
     styles: [req.body.styles]
-  }).then((response) => {
-    res.status(200).json(response)
-  }).catch((error) => {
-    next(error);
-  }) 
+  }, {new: true})
+    .then((response) => {
+      res.status(200).json(response)
+    })
+    .catch((error) => {
+      next(error);
+    })
 })
 
 module.exports = router;

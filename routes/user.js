@@ -3,12 +3,14 @@ const router = express.Router();
 
 const User = require('../models/user');
 
-router.get('/profile', isLoggedIn, (req, res) => {
-  const userId = req.session.currentUser._id;
-  User.findById(userId)
-    .then(user => {
-      console.log(user)
-      return res.json(user);
+// Edit your profile
+
+router.get('/edit/:id', (req, res, next) => {
+  const id = req.session.currentUser._id;
+  User.findById(id)
+    .then((user) => {
+      res.render('profile/edit', { user: user });
+
     })
     .catch(error => {
       return res.json(error);
@@ -27,6 +29,5 @@ router.post('/profile/create', (req, res, next) => {
     })
 
 })
-
 
 module.exports = router;
