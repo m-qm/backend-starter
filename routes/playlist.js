@@ -88,7 +88,6 @@ router.put('/:id/edit', (req, res, next) => {
 
 router.get('/:id', (req, res, next) => {
     const id = req.params.id;
-  // const id = req.session.playlist._id;
   Playlist.findById(id, (error, playlist)) 
     .then((response) => {
     res.status(200).json(response)

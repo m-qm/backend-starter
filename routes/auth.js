@@ -119,11 +119,4 @@ router.put('/profile/edit', (req, res, next) => {
     })
 })
 
-// router.post('/profile', (req, res, next) => {
-//   const id = req.session.currentUser._id;
-
-//   User.findByIdAndUpdate(id, )
-
-// })
-
 module.exports = router;
