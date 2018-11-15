@@ -4,7 +4,6 @@ const router = express.Router();
 const Playlist = require('../models/playlist');
 const User = require('../models/user');
 
-
 router.get('/', (req, res, next) => {
   Playlist.find().populate('playlist')
   .then((allThePlaylists) => {
@@ -17,7 +16,7 @@ router.get('/', (req, res, next) => {
 
 router.post('/create', (req, res, next) => {
   const id = req.session.currentUser._id;
-  console.log(id)
+
     Playlist.create({
       owner: id,
       title: req.body.title,
@@ -111,4 +110,3 @@ router.get('/search', (req, res, next) => {
 });
 
 module.exports = router
-

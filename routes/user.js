@@ -10,8 +10,24 @@ router.get('/edit/:id', (req, res, next) => {
   User.findById(id)
     .then((user) => {
       res.render('profile/edit', { user: user });
+
     })
-    .catch(next);
+    .catch(error => {
+      return res.json(error);
+    } );
 });
+
+router.post('/profile/create', (req, res, next) => {
+    User.findById(userId)({
+      description: req.body.description,
+      email: req.body.email,
+      styles: [req.body.styles]
+    }).then((response) => {
+      res.status(200).json(response)
+    }).catch((error) => {
+      next(error);
+    })
+
+})
 
 module.exports = router;
